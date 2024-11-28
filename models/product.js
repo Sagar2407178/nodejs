@@ -10,12 +10,21 @@
 //             return products;
 //     }
 // }
+// import {v4 as uuidv4} from 'uuid';
 
-
+const e = require('express');
 const fs = require('fs');
 const path = require('path');
 
 let newid=0
+
+const generateUniqueId = require('generate-unique-id');
+
+// example 1
+// const id1 = generateUniqueId();
+
+// example 2
+
 
 const p = path.join(
  __dirname,
@@ -36,7 +45,7 @@ const getProductsFromFile = cb => {
 };
 
 module.exports = class Product {
-  constructor(id,name,price,imgurl,details) {
+  constructor(name,price,imgurl,details) {
 
     this.name = name;
     this.price = price;
@@ -46,12 +55,23 @@ module.exports = class Product {
   }
 
   save(id) {
-    this.id= id==null?newid:id;
+   
     
-    newid++;
-    console.log(this)
     getProductsFromFile(products => {
-      products.push(this);
+      if(isNaN(id)){
+        const newid = generateUniqueId({
+          length: 2,
+          useLetters: false
+        });
+
+        this.id= newid;
+        products.push(this);
+      }else{
+        this.id=id;
+        let productindex=products.findIndex(p => p.id == this.id)
+        products[productindex]=this;
+
+      }
       fs.writeFile(p, JSON.stringify(products), err => {
         console.log(err);
       });
@@ -60,11 +80,11 @@ module.exports = class Product {
 
   static deleteById(id) {
     getProductsFromFile(products => {
-      const product = products.find(prod => prod.id === id);
+      // const product = products.find(prod => prod.id === id);
       const updatedProducts = products.filter(prod => prod.id !== id);
       fs.writeFile(p, JSON.stringify(updatedProducts), err => {
         if (!err) {
-          Cart.deleteProduct(id, product.price);
+          // Cart.deleteProduct(id, product.price);
         }
       });
     });
@@ -73,9 +93,15 @@ module.exports = class Product {
 
   static getProduct(id,cb) {
     getProductsFromFile(products => {
-      let product = products.find(p => p.id == id);
-
-      console.log(product);
+      let product;
+      if(id!=null){
+ 
+         product = products.find(p => p.id == id);
+      }
+      else{
+        product={id:null }
+      }
+      // console.log(product)    
       return cb(product);
     });
   }

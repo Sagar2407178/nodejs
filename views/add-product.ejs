@@ -7,8 +7,8 @@
    <%- include('includes/navigation.ejs') %>
 
     <main>
-        <form class="product-form" style="width: 26rem;" action="/admin/add-product" method="POST">
-            <!-- Name input -->
+        <form class="product-form" style="width: 26rem;" action="/admin/add-product/<%= product.id %>" method="POST">
+      <!-- Name input -->
             <div class="form-outline mb-4">
                 <label class="form-label" for="name">Product Name</label>
               <input type="text" id="name" name="name" class="form-control" value="<%= product.name %>" />

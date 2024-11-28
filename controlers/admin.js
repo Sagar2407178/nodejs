@@ -3,13 +3,7 @@
 // const products = [];
 const Product=require('../models/product')
 
-exports.add=(req, res, next) => {
 
-    res.render('add-product', {
-      pageTitle: 'Add Product',
-      path: '/admin/add-product',
-    });
-  }
 
   exports.products=(req, res, next) => {
     Product.allData((products)=>{
@@ -25,12 +19,10 @@ exports.add=(req, res, next) => {
 exports.editproduct=(req, res, next) => {
 
   const prodId = req.params.id;
-  console.log(prodId)
-
+  
   Product.getProduct(prodId,(product)=>{
-    console.log(product)
     res.render('add-product', {
-      product: product==null?{}:product,
+      product: product==null?{id:'null'}:product,
       pageTitle: 'ProductDetail',
       path: '/',
     });
@@ -41,16 +33,25 @@ exports.editproduct=(req, res, next) => {
 
 
   exports.update=(req, res, next) => {
+    const prodId = req.params.id;
     const name= req.body.name;
-    console.log(name)
     const price= req.body.price;
-    const   imgurl = req.body.imgurl;
+    const imgurl = req.body.imgurl;
 
     const details= req.body.details;
 
     const newProduct= new Product(name,price,imgurl,details )
-    newProduct.save()
-    res.redirect('/');
+    newProduct.save(prodId)
+    res.redirect('/admin/products');
+
+  }
+
+
+exports.delete=(req, res, next) => {
+  Product.deleteById(req.params.id)
+  
+  res.redirect('/admin/products');
+    
   }
 
 // exports.products = products;
