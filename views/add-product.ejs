@@ -1,0 +1,40 @@
+<%- include('includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/forms.css">
+    <link rel="stylesheet" href="/css/product.css">
+</head>
+
+<body>
+   <%- include('includes/navigation.ejs') %>
+
+    <main>
+        <form class="product-form" style="width: 26rem;" action="/admin/add-product" method="POST">
+            <!-- Name input -->
+            <div class="form-outline mb-4">
+                <label class="form-label" for="name">Product Name</label>
+              <input type="text" id="name" name="name" class="form-control" value="<%= product.name %>" />
+            </div>
+            <!-- Email input -->
+            <div data-mdb-input-init class="form-outline mb-4">
+              <label class="form-label" for="imgurl">ImageUrl</label>
+            <input type="text"  id="imgurl" name="imgurl" class="form-control" value="<%= product.imgurl %>"/>
+          </div>
+            <!-- Email input -->
+            <div data-mdb-input-init class="form-outline mb-4">
+                <label class="form-label" for="price">Price</label>
+              <input type="number"  id="price" name="price" class="form-control" value="<%= product.price %>"/>
+            </div>
+          
+            <!-- Message input -->
+            <div data-mdb-input-init class="form-outline mb-4">
+                <label class="form-label" for="details">Details</label>
+              <textarea class="form-control" id="details" name="details" rows="4"  value=""><%= product.details %></textarea>
+            </div>
+          
+           
+          
+            <!-- Submit button -->
+            <button type="submit" class="btn btn-primary btn-block mb-4">Add</button>
+          </form>
+
+    </main>
+<%- include('includes/end.ejs') %>

@@ -1,0 +1,18 @@
+<%- include('../includes/head.ejs') %>
+</head>
+<body>
+    <%- include('../includes/navigation.ejs') %>
+    <main class="centered">
+      
+        <div class="text-center">
+            <img src="<%= product.imgurl %>" class="rounded"   width="304" height="236" alt="<%= product.name %>">
+          </div>
+        <h1>Name :- <%= product.name %></h1>
+        <hr>
+        <h2>Price :- <%= product.price %></h2>
+        <p>Detail :-  <%= product.details %></p>
+        <a href="/cart/<%= product.id %>" class="btn btn-primary" data-mdb-ripple-init>Add to Cart</a>
+
+    </main>
+
+    <%- include('../includes/end.ejs') %>

@@ -1,0 +1,33 @@
+<%- include('../includes/head.ejs') %>
+</head>
+
+<body>
+    <%- include('../includes/navigation.ejs') %>
+    <main>
+        <% if (prods.length > 0) { %>
+            <div class="row">
+                
+                <% for (let product of prods) { %>
+                    <div class="card col-sm-3 m-5" >
+                        <div class="bg-image hover-overlay" data-mdb-ripple-init data-mdb-ripple-color="light">
+                          <img src="https://mdbcdn.b-cdn.net/img/new/standard/nature/111.webp" class="card-img-top"/>
+                          <a href="#!">
+                            <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                          </a>
+                        </div>
+                        <div class="card-body">
+                          <h5 class="card-title"><%= product.name %></h5>
+                          <p class="card-text"><%= product.price %></p>
+                          <a href="/admin/edit/<%= product.id %>" class="btn btn-primary" data-mdb-ripple-init>Edit</a>
+                          <a href="/delete/<%= product.id %>" class="btn btn-primary" data-mdb-ripple-init>Delete</a>
+                        
+                        </div>
+                        
+                      </div>
+                <% } %>
+            </div>
+        <% } else { %>
+            <h1>No Products Found!</h1>
+        <% } %>
+    </main>
+<%- include('../includes/end.ejs') %> 
